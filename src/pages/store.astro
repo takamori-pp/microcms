@@ -16,6 +16,103 @@ const response = await client.get({
   <link rel="stylesheet" href="/th_test/microcms/css/style.css">
 </head>
   <body>
+
+<div class="p-flyer">
+  <div class="p-flyer__inner inner">
+    <h1>10km以内の店舗一覧</h1>
+    <p id="status-message">位置情報を取得して計算中です...</p>
+    
+    <ul id="store-list" class="p-flyer__flex"></ul>
+  </div>
+</div>
+
+<script>
+  // 1. 2地点間の距離を計算する関数 (km)
+  function getDistance(lat1, lng1, lat2, lng2) {
+    const R = 6371; // 地球の半径
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // 2. メインの処理
+  async function searchNearbyStores() {
+    const listElement = document.getElementById('store-list');
+    const statusElement = document.getElementById('status-message');
+
+    try {
+      // JSONデータの取得
+      const response = await fetch('/deploy/store.json');
+      const stores = await response.json();
+
+      // 現在地の取得
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLng = position.coords.longitude;
+
+          // 10km以内の店舗をフィルタリング
+          const nearbyStores = stores.filter(store => {
+            const distance = getDistance(
+              userLat, 
+              userLng, 
+              parseFloat(store.latitude), 
+              parseFloat(store.longitude)
+            );
+            return distance <= 10; // 10km以内
+          });
+
+          // HTMLに出力
+          if (nearbyStores.length > 0) {
+            statusElement.textContent = `${nearbyStores.length}件の店舗が見つかりました。`;
+            listElement.innerHTML = nearbyStores.map(store => `
+              <li class="p10">
+                <p class="name">${store.name}</p>
+                <p class="area">${store.area.join(', ')}</p>
+                <p class="coords">緯度: ${store.latitude} / 経度: ${store.longitude}</p>
+              </li>
+            `).join('');
+          } else {
+            statusElement.textContent = "10km以内に店舗は見つかりませんでした。";
+          }
+        },
+        (error) => {
+          statusElement.textContent = "位置情報の取得を許可してください。";
+          console.error(error);
+        }
+      );
+    } catch (err) {
+      statusElement.textContent = "データの読み込みに失敗しました。";
+      console.error(err);
+    }
+  }
+
+  // 実行
+  searchNearbyStores();
+</script>
+
+<style>
+  .p-flyer__flex {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .p10 {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    width: calc(33.333% - 20px);
+  }
+  .name { font-weight: bold; font-size: 1.2rem; }
+  .area { color: #666; }
+</style>
+
     <h1>記事一覧</h1>
     <div>
       {
@@ -29,5 +126,7 @@ const response = await client.get({
         ))
       }
     </div>
+
+
   </body>
 </html>
