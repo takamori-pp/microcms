@@ -46,7 +46,7 @@ const response = await client.get({
 
     try {
       // JSONデータの取得
-      const response = await fetch('/deploy/store.json');
+      const response = await fetch('../store.json');
       const stores = await response.json();
 
       // 現在地の取得
