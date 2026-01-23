@@ -27,7 +27,7 @@ const response = await client.get({
                 <div class="p10">
                   <p class="p10 name">{post.id2}</p>
                   <p class="area">{
-                    post.ids.map((id: string) => (
+                    post.ids?.map((id: string) => (
                       <span class="id-tag">{id}</span>
                     ))  
                   }</p>
