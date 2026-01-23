@@ -1,0 +1,30 @@
+---
+// src/pages/blog/[id].astro
+import { client } from "../../lib/microcms";
+
+// 1. 全記事のIDを取得して、どのURL（ページ）を作るかAstroに教える
+export async function getStaticPaths() {
+  const response = await client.get({ endpoint: "info" });
+  return response.contents.map((content: any) => ({
+    params: { id: content.id },
+  }));
+}
+
+// 2. 特定の記事の本文を取得する
+const { id } = Astro.params;
+const post = await client.getListDetail({
+  endpoint: "info",
+  contentId: id,
+});
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+</head>
+  <body>
+    <h1>{post.title}</h1>
+    <article set:html={post.content} />
+  </body>
+</html>

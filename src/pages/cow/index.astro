@@ -1,0 +1,55 @@
+---
+// src/pages/index.astro
+import { client } from "../../lib/microcms";
+
+// microCMSから「blog」というエンドポイントのデータを取得
+const response = await client.get({ 
+  endpoint: "cow", // あなたがmicroCMSで作ったエンドポイント名に変更
+  queries: { fields: ["id2", "ids", "lot", "breed"] } 
+});
+
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/th_test/microcms/css/style.css">
+</head>
+  <body>
+    <div class="p-flyer">
+      <div class="p-flyer__inner inner">
+
+      <div class="p-info__cats">
+        <h2>カテゴリ一覧</h2>
+        <div>
+          <ul class="p-info__cats-flex c-flex">
+            {
+              response.contents.map((post: any) => (
+                <div class="p10">
+                  <p class="p10 name">{post.id2}</p>
+                  <p class="area">{post.ids}</p>
+                  <p class="lati">{post.lot}</p>
+                  <p class="longi">{post.breed}</p>
+                </div>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    
+        <h1>記事一覧</h1>
+        <ul class="p-flyer__flex">
+          {
+            response.contents.map((post: any) => (
+              <li class="p-flyer__box">
+                <a href={`./blog/${post.id}`}>{post.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <a href="./store">store</a>
+      </div>
+    </div>
+  </body>
+</html>

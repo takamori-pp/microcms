@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  background-color: #f5f5ff;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+li{
+  list-style: none;
+}
+
+.p10 {
+  padding: 10px;
+}
+
+.store, .search, .news {
+  padding: 20px 30px;
+  margin-bottom: 60px;
+  background-color: #fff;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.c-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+input, select {
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+code {
+  background-color: #000;
+  color: #fff;
+  display: block;
+  line-height: 2;
+  padding: 10px 20px;
+}
+
+.cownum__result {
+  padding: 30px 20px;
+  background-color: #f5f5ff;
+}
+
+.cownum__num {
+  margin: 20px 0;
+}
+
+.cow-item {
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.p-flyer__flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.p-flyer__box {
+  width: calc(25% - 15px);
+  background-color: #fff;
+  padding: 10px;
+}
+.p-flyer__box p {
+  width: 50%;
+}
+.p-flyer__box img {
+  width: 300px;
+}
+
+.p-flyer__content {
+  background-color: #fff;
+  padding: 60px;
+}
+.p-flyer__content .title {
+  font-size: 3rem;
+}
+
+.p-info__cats {
+  background-color: #fff;
+  margin-bottom: 60px;
+  padding: 30px;
+}
+.p-info__cats-flex {
+  gap: 20px;
+}
+.p-info__cats-flex a {
+  color: #000;
+  transition: 0.3s;
+}
+.p-info__cats-flex a:hover {
+  color: #55f;
+}
+
+table {
+  width: 100%;
+}
+table th {
+  padding: 0 10px;
+  background-color: #fee;
+  text-align: left;
+}
+table td {
+  padding: 0 10px;
+  background-color: #fafafa;
+}
+/*# sourceMappingURL=style.css.map */

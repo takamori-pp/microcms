@@ -1,0 +1,42 @@
+name: Deploy to Xserver
+
+on:
+  push:
+    branches: [ main ]
+  repository_dispatch:
+    types: [ http-post ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Node.jsのセットアップを追加（推奨）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # プロジェクトで使っているバージョンに合わせてください
+          cache: 'npm'
+
+      # 2. npm ci で依存関係をクリーンインストール
+      - name: Install dependencies
+        run: npm ci
+
+      # 3. 権限エラー対策として chmod を追加し、npm run build を実行
+      - name: Build project
+        run: npm run build
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+
+      - name: Deploy via SSH
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.XSERVER_HOST }}
+          REMOTE_USER: ${{ secrets.XSERVER_USER }}
+          REMOTE_PORT: 10022
+          TARGET: ${{ secrets.XSERVER_REMOTE_PATH }}
+          SOURCE: "dist/" # Astroの書き出しフォルダ
+          ARGS: "-rlgoDzvc -i"
