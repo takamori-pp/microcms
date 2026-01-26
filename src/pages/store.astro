@@ -112,19 +112,20 @@ const response = await client.get({
   .name { font-weight: bold; font-size: 1.2rem; }
   .area { color: #666; }
 </style>
-
-    <h1>記事一覧</h1>
-    <div>
-      {
-        response.contents.map((post: any) => (
-          <div class="p10">
-            <p class="p10 name">{post.name}</p>
-            <p class="area">{post.area}</p>
-            <p class="lati">{post.latitude}</p>
-            <p class="longi">{post.longitude}</p>
-          </div>
-        ))
-      }
+    <div class="p-flyer__inner inner">
+      <h1>記事一覧</h1>
+      <div>
+        {
+          response.contents.map((post: any) => (
+            <div class="p10">
+              <p class="p10 name">{post.name}</p>
+              <p class="area">{post.area}</p>
+              <p class="lati">{post.latitude}</p>
+              <p class="longi">{post.longitude}</p>
+            </div>
+          ))
+        }
+      </div>
     </div>
 
 
