@@ -60,19 +60,41 @@ import '../styles/style.css';
       </div>
     </div>
   </body>
-  <script>
-    const data = './cow.json';
-    const listContainer = document.getElementById('article-list');
+  <script>// 1. JSONファイルの場所（S3のURLや相対パス）
+  const jsonUrl = "./cow.json"; 
+  const listContainer = document.getElementById("article-list");
 
-    const htmlContent = data.map(item => `
-      <li>
-        <strong>ID:</strong> ${item.id2} | 
-        <strong>LOT:</strong> ${item.lot} | 
-        <strong>品種:</strong> ${item.breed} | 
-        <strong>性別:</strong> ${item.gender}
-      </li>
-    `).join('');
+  // 2. 非同期でデータを取得する関数
+  async function displayCowList() {
+    try {
+      const response = await fetch(jsonUrl);
+      
+      if (!response.ok) {
+        throw new Error("JSONの読み込みに失敗しました");
+      }
 
-    listContainer.innerHTML = htmlContent;
+      // ここで文字列が「配列データ」に変換されます
+      const data = await response.json();
+
+      // 3. データを使ってHTMLを生成
+      const htmlContent = data.map(n => `
+        <li>
+          <strong>ID:</strong> ${n.id2} | 
+          <strong>LOT:</strong> ${n.lot} | 
+          <strong>品種:</strong> ${n.breed} | 
+          <strong>性別:</strong> ${n.gender}
+        </li>
+      `).join("");
+
+      listContainer.innerHTML = htmlContent;
+      
+    } catch (error) {
+      console.error("エラーが発生しました:", error);
+      listContainer.innerHTML = "データの読み込み中にエラーが発生しました。";
+    }
+  }
+
+  // 実行
+  displayCowList();
   </script>
 </html>
