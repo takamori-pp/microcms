@@ -1,0 +1,38 @@
+---
+// src/pages/store.astro
+import { client } from "../lib/microcms";
+
+// microCMSから「blog」というエンドポイントのデータを取得
+const response = await client.get({ 
+  endpoint: "store", // あなたがmicroCMSで作ったエンドポイント名に変更
+  queries: { fields: ["name", "area", "latitude", "longitude"] } 
+});
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/th_test/microcms/css/style.css">
+</head>
+  <body>
+    <div class="p-flyer">
+      <div class="p-flyer__inner inner">
+        <h1>店舗一覧</h1>
+        <div>
+          {
+            response.contents.map((post: any) => (
+              <div class="p10">
+                <p class="p10 name">{post.name}</p>
+                <p class="area">{post.area}</p>
+                <p class="lati">{post.latitude}</p>
+                <p class="longi">{post.longitude}</p>
+              </div>
+            ))
+          }
+        </div>
+        <a href="../../">TOP</a>
+      </div>
+    </div>
+  </body>
+</html>
