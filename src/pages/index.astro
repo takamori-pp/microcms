@@ -62,9 +62,9 @@ import '../styles/style.css';
       </div>
     </div>
     <footer id="footer"></footer>
-    <script src="../script/script.js"></script>
+    <script src="../script/script.js" is:inline></script>
   </body>
-  <script>// 1. JSONファイルの場所（S3のURLや相対パス）
+  <script is:inline>// 1. JSONファイルの場所（S3のURLや相対パス）
   const jsonUrl = "./cow.json"; 
   const listContainer = document.getElementById("article-list");
 
