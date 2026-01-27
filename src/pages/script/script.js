@@ -1,0 +1,1 @@
+document.write('<footer class="footer">Footer</footer>');
