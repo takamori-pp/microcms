@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro
 import { client } from "../lib/microcms";
+import Header from "./header.astro";
 
 // microCMSから「categories」というエンドポイントのデータを取得
 const response_cat = await client.get({ 
@@ -23,6 +24,7 @@ import '../styles/style.css';
   <meta charset="UTF-8">
 </head>
   <body>
+    <Header />
     <div class="p-flyer">
       <div class="p-flyer__inner inner">
 
