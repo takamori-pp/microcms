@@ -25,6 +25,9 @@ const post = await client.getListDetail({
 </head>
   <body>
     <h1>{post.title}</h1>
-    <article set:html={post.content} />
+    <article>
+      {post.content}
+      {post.goods}
+    </article>
   </body>
 </html>
