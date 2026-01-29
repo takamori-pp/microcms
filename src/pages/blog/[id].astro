@@ -22,12 +22,26 @@ const post = await client.getListDetail({
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="/th_test/microcms/css/style.css">
 </head>
   <body>
     <h1>{post.title}</h1>
     <article>
       {post.content}
-      {post.goods}
     </article>
+    <h2>繰り返しフィールド</h2>
+    <div class="goods c-flex p-flyer__flex">
+      {post.goods && post.goods.map((item :any) => (
+        <div class="goods-item p-flyer__box">
+          {item.img && <img src={item.ima.url} />}
+          <h3>{item.name}</h3>
+          <p>{item.price}</p>
+          <p>{item.discription}</p>
+        </div>
+      ))}
+    </div>
+    
+    <footer id="footer"></footer>
+    <script src="./script/script.js" is:inline></script>
   </body>
 </html>
