@@ -11,14 +11,14 @@ const response_cat = await client.get({
 // microCMSから「info」というエンドポイントのデータを取得
 const response = await client.get({ 
   endpoint: "info", // あなたがmicroCMSで作ったエンドポイント名に変更
-  queries: { fields: ["slug", "title"] } 
+  queries: { fields: ["id", "title" , "slug"] } 
 });
 // microCMSから「info」というエンドポイントのデータを取得
 const response_campaign = await client.get({ 
   endpoint: "info", // あなたがmicroCMSで作ったエンドポイント名に変更
   queries: {
     filters: "campaign[equals]true",
-    fields: ["slug", "title"]
+    fields: ["id", "title" , "slug"]
   } 
 });
 
