@@ -17,7 +17,7 @@ const response = await client.get({
 const response_campaign = await client.get({ 
   endpoint: "info", // あなたがmicroCMSで作ったエンドポイント名に変更
   queries: {
-    filters:"?filters=campaign[equals]true",
+    filters: "campaign[equals]true",
     fields: ["id", "title"]
   } 
 });
