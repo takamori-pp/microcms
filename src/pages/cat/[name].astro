@@ -38,7 +38,7 @@ const blogResponse = await client.get({
     {
       blogResponse.contents.map((post: any) => (
         <li>
-          <a href={`/info/${post.id}`}>
+          <a href={`/info/${post.slug}.html`}>
             {post.title}
           </a>
         </li>
