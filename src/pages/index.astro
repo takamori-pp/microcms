@@ -13,6 +13,11 @@ const response = await client.get({
   endpoint: "info", // あなたがmicroCMSで作ったエンドポイント名に変更
   queries: { fields: ["id", "title"] } 
 });
+// microCMSから「info」というエンドポイントのデータを取得
+const response_campaign = await client.get({ 
+  endpoint: "info?filter=campaign[equals]true", // あなたがmicroCMSで作ったエンドポイント名に変更
+  queries: { fields: ["id", "title"] } 
+});
 
 import '../styles/style.css';
 
@@ -43,6 +48,16 @@ import '../styles/style.css';
         </div>
       </div>
     
+        <h1>期間限定一覧</h1>
+        <ul class="p-flyer__flex">
+          {
+            response_campaign.contents.map((post: any) => (
+              <li class="p-flyer__box">
+                <a href={`./blog/${post.id}.html`}>{post.title}</a>
+              </li>
+            ))
+          }
+        </ul>
         <h1>記事一覧</h1>
         <ul class="p-flyer__flex">
           {
