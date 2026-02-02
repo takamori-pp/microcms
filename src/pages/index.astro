@@ -15,8 +15,11 @@ const response = await client.get({
 });
 // microCMSから「info」というエンドポイントのデータを取得
 const response_campaign = await client.get({ 
-  endpoint: "info?filter=campaign[equals]true", // あなたがmicroCMSで作ったエンドポイント名に変更
-  queries: { fields: ["id", "title"] } 
+  endpoint: "info", // あなたがmicroCMSで作ったエンドポイント名に変更
+  queries: {
+    filters:"?filter=campaign[equals]true",
+    fields: ["id", "title"]
+  } 
 });
 
 import '../styles/style.css';
