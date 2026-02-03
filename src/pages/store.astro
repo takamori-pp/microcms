@@ -59,19 +59,15 @@ const response = await client.get({
           const userLng = position.coords.longitude;
 
           // 10km以内の店舗をフィルタリング
-          const storesWithDistance = stores.filter(store => {
+          const nearbyStores = stores.filter(store => {
             const distance = getDistance(
               userLat, 
               userLng, 
               parseFloat(store.latitude), 
               parseFloat(store.longitude)
             );
-            return {
-              ...store,
-              distance // 10km以内
-            }
+            return distance <= 10; // 10km以内
           });
-          const nearbyStores = storesWithDistance.filter(store => store.distance <= 10);
 
           // HTMLに出力
           if (nearbyStores.length > 0) {
@@ -81,7 +77,6 @@ const response = await client.get({
                 <p class="name">${store.name}</p>
                 <p class="area">${store.area.join(', ')}</p>
                 <p class="coords">緯度: ${store.latitude} / 経度: ${store.longitude}</p>
-                <p class="distance">${store.distance.toFixed(2)}</p>
               </li>
             `).join('');
           } else {
