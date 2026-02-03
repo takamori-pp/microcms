@@ -77,6 +77,7 @@ const response = await client.get({
                 <p class="name">${store.name}</p>
                 <p class="area">${store.area.join(', ')}</p>
                 <p class="coords">緯度: ${store.latitude} / 経度: ${store.longitude}</p>
+                <p class="distance">${nearbyStores}</p>
               </li>
             `).join('');
           } else {
