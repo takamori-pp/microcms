@@ -36,6 +36,31 @@ const { post } = Astro.props;
           </div>
         ))}
       </div>
+      <div class="contents">
+        {
+          post.contents && post.contents.map((content: any) => {
+            // contents01: リッチエディタ
+            if (content.fieldId === 'contents01') {
+              return (
+                <div class="custom-field-01" set:html={content.richeditor} />
+              );
+            }
+
+            // contents02: HTMLとCSS
+            if (content.fieldId === 'contents02') {
+              return (
+                <>
+                  {/* CSSがある場合はstyleタグを展開 */}
+                  {content.css && <style set:html={content.css} />}
+                  <div class="custom-field-02" set:html={content.html} />
+                </>
+              );
+            }
+
+            return null;
+          })
+        }
+      </div>
       <article set:html={post.test2} />
     </div>
     
